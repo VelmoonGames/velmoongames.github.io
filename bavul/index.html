@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mom's Suitcase · Annemin Bavulu</title>
+<meta name="description" content="Help Mom pack her suitcase! A cozy packing puzzle game. Free on iPhone and Android.">
+<meta property="og:title" content="Mom's Suitcase">
+<meta property="og:description" content="Help Mom pack her suitcase! A cozy packing puzzle game. Free on iPhone and Android.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://velmoongames.github.io/bavul/">
+<style>
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3ebe1;color:#3e2723;line-height:1.6}
+main{max-width:520px;margin:0 auto;padding:56px 20px;text-align:center}
+h1{font-size:1.8rem;margin:0 0 4px}
+small{color:#8a6f62}
+.kart{background:#fffaf3;border-radius:20px;padding:24px;margin-top:28px;box-shadow:0 2px 0 #e5d6c3;display:flex;flex-direction:column;gap:12px}
+.magaza{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;background:#3e2723;color:#fffaf3;font-weight:600;text-decoration:none;font-size:1.05rem}
+.magaza:focus-visible{outline:3px solid #2a8c86;outline-offset:2px}
+#durum{min-height:1.6em}
+</style>
+</head>
+<body>
+<main>
+  <h1>Mom's Suitcase</h1>
+  <small>Annemin Bavulu · a cozy packing puzzle</small>
+  <div class="kart">
+    <p id="durum">Get the game:</p>
+    <a class="magaza" id="ios" href="https://apps.apple.com/app/id6838346625">Download on the App Store</a>
+    <a class="magaza" id="android" href="https://play.google.com/store/apps/details?id=com.velmoongames.anneminbavulu">Get it on Google Play</a>
+  </div>
+  <p><small><a href="../privacy.html">Privacy Policy</a></small></p>
+</main>
+<script>
+// Akıllı link: telefonu tanır, doğru mağazaya gönderir.
+// Tıklamalar GoatCounter ile çerezsiz sayılır: "link-<kaynak>-<cihaz>" (örnek: link-ig-ios).
+// Kaynak linkin sonundaki ?k= değeridir: ig (Instagram), tt (TikTok), yt (YouTube), x (X).
+(function () {
+  var GC_KOD = "velmoongames";  // GoatCounter site kodu; boşsa sayılmaz
+  var APPSTORE = "https://apps.apple.com/app/id6838346625";
+  var PLAY = "https://play.google.com/store/apps/details?id=com.velmoongames.anneminbavulu";
+
+  var k = (new URLSearchParams(location.search).get("k") || "dogrudan").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 12) || "dogrudan";
+  var ua = navigator.userAgent || "";
+  var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var android = /Android/i.test(ua);
+  var cihaz = ios ? "ios" : android ? "android" : "masaustu";
+
+  // Play, hangi platformdan gelindiğini kendi raporunda gösterebilsin
+  var playHedef = PLAY + "&referrer=" + encodeURIComponent("utm_source=" + k + "&utm_medium=social&utm_campaign=bavul_link");
+  document.getElementById("android").href = playHedef;
+  var hedef = ios ? APPSTORE : android ? playHedef : null;
+
+  var gitti = false;
+  function git() {
+    if (gitti || !hedef) return;
+    gitti = true;
+    location.replace(hedef);
+  }
+
+  if (hedef) document.getElementById("durum").textContent = "Opening the store…";
+
+  if (GC_KOD) {
+    var img = new Image();
+    img.onload = img.onerror = git;  // sayım gidince yönlendir
+    img.src = "https://" + GC_KOD + ".goatcounter.com/count?e=true&p=" + encodeURIComponent("link-" + k + "-" + cihaz) +
+      "&t=" + encodeURIComponent("Akilli link") + "&rnd=" + Math.random().toString(36).slice(2);
+  }
+  setTimeout(git, GC_KOD ? 800 : 0);  // sayaç yavaşsa bekletme
+})();
+</script>
+</body>
+</html>
